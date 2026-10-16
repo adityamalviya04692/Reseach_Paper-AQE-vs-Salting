@@ -8,6 +8,8 @@ authors:
 version: 1.0.0
 date-released: 2026-08-18
 license: MIT
+repository-code: "https://github.com/adityamalviya04692/spark-skew-bench"
+url: "https://github.com/adityamalviya04692/spark-skew-bench"
 abstract: >-
   skewbench is a reproducible harness for evaluating skewed-join mitigation
   strategies in Apache Spark. It generates Zipfian-skewed synthetic workloads

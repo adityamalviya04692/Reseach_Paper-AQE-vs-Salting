@@ -1,4 +1,67 @@
-# skewbench
+# SKEWBENCH: AQE vs Salting in Apache Spark
+
+## Current paper and repository status
+
+**[Read the current 13-page paper](AQE_vs_Salting_paper.pdf)** ·
+[LaTeX source](paper/main.tex) · [Cluster guide](docs/CLUSTER_GUIDE.md)
+
+Research by Aditya Malviya. This repository contains the code, experiment
+configurations and analysis used for *Adaptive Query Execution or Salting? A Cost
+Model and Decision Procedure for Skewed Joins in Apache Spark*.
+
+The current paper supersedes the earlier 11-page draft. Its reported findings are:
+
+- In the measured single-node workload, the longest join-stage task was 17.0 seconds
+  for the baseline and 17.5 seconds with AQE. The skew-join rule did not engage.
+- Lowering `advisoryPartitionSizeInBytes` below the hot partition size engaged the
+  rule in configuration probes. Adjusting skew detection settings alone did not.
+- Selective salting reduced the critical path by 1.9× on the measured workload.
+- The reported shuffle-record replication slopes were 11 rows per salt value for
+  selective salting and 20,000 for uniform salting.
+- The runtime replication coefficient was statistically unidentified. The paper
+  presents the optimal-cardinality formula as theory, not an experimentally
+  validated optimum.
+
+These are workload-specific research findings. The older results overview below
+remains historical context and should not be cited instead of the current paper.
+
+### Public artifacts and scope
+
+The code, manuscript and figures are included. Generated data, raw result JSONL/CSV
+files and Spark event logs are excluded by `.gitignore`. No separate raw-results
+archive or DOI is linked here, despite the manuscript's artifact-availability wording.
+This repository does not establish peer-reviewed publication status.
+
+### Current reproduction entry point
+
+Use Python 3.9+ and a Java runtime compatible with the pinned Spark 3.5.3 dependency.
+Install `pytest` separately after `make install`. LaTeX is required only to rebuild
+the manuscript. The current Makefile defaults use `config/v3_core.yaml` and
+`results/v3_single.jsonl`, rather than the older pilot paths described below.
+
+```bash
+git clone https://github.com/adityamalviya04692/spark-skew-bench.git
+cd spark-skew-bench
+python -m venv .venv
+source .venv/bin/activate
+make install
+python -m pip install pytest
+make test
+make reproduce
+```
+
+The core grid does not run every auxiliary probe in the paper. Review script output
+and compilation logs before treating a run as a successful reproduction.
+
+### Does this project need a live URL?
+
+The repository and downloadable paper are the project entry points. This is a
+Python/Spark benchmark, so a hosted application is not required. GitHub Pages could
+provide an optional static research summary, but would not run Spark experiments.
+
+---
+
+## Original project overview (earlier draft)
 
 **A reproducible benchmark for Spark skewed-join mitigation, and a cost model for salt cardinality.**
 

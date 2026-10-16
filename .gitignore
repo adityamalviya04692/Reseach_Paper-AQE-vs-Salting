@@ -12,3 +12,7 @@ paper/*.bbl
 paper/*.blg
 paper/*.synctex.gz
 .DS_Store
+.env
+.env.*
+!.env.example
+spark-skew-bench/
